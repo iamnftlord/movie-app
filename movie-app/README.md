@@ -111,7 +111,7 @@ Installation
 
 Clone the repo:
 
-git clone https://github.com/your-username/movie-app.git
+git clone https://github.com/iamnftlord/movie-app.git
 cd movie-app
 
 
