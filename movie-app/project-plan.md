@@ -5,13 +5,13 @@ This document outlines the step-by-step process for building the Movie Database 
 ---
 
 ## 🏗️ Phase 1: Environment Setup & Architecture
-- [ ] **Initialize Vite Project:** Run `npm create vite@latest` and select the React/JavaScript template.
-- [ ] **Install Dependencies:** - `npm install zustand react-router-dom axios`
+- [X] **Initialize Vite Project:** Run `npm create vite@latest` and select the React/JavaScript template.
+- [x] **Install Dependencies:** - `npm install zustand react-router-dom axios`
     - `npm install -D tailwindcss postcss autoprefixer`
 - [ ] **Configure Tailwind:** Run `npx tailwindcss init -p` and set up the `content` paths in `tailwind.config.js`.
-- [ ] **Environment Variables:** Create a `.env` file in the root directory:
+- [x] **Environment Variables:** Create a `.env` file in the root directory:
     - `VITE_OMDB_API_KEY=your_key_here`
-- [ ] **Folder Structure:** Create the following directory layout:
+- [x] **Folder Structure:** Create the following directory layout:
     - `src/components` (UI pieces like Buttons, Cards)
     - `src/pages` (Home.jsx, MovieDetails.jsx)
     - `src/store` (useMovieStore.js)
