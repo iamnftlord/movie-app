@@ -1,21 +1,19 @@
 import { useMemo } from "react"
 import { FiSearch } from "react-icons/fi"
 import useMovieStore from "../store/movies"
-import MovieCard from "./common/MovieCard"
-// import debounce from 'lodash.debounce'
-
+import _ from 'lodash';
+import { fetchMovies } from "../service/movies";
 
 const SearchBar = () => {
-  const { setSearchTerm } = useMovieStore ();
+  const { setSearchTerm, SearchTerm } = useMovieStore();
 
  const handleChange = (e) => {
   setSearchTerm(e.target.value);
- const updatedSearchTerm = _.debounce(() => {
-  fetchMovies()
- }, 250)
-
- updatedSearchTerm();
+  console.log("Search term update to:", SearchTerm);
+ fetchMovies()
 };
+
+const debounceHandleChange = _.debounce(handleChange, 250);
 
 
   return (
@@ -28,7 +26,7 @@ const SearchBar = () => {
         
         <input type="text" 
         placeholder="Search for Movies or Tv Series" 
-        onChange={(e) => handleChange}
+        onChange={debounceHandleChange}
         className="outline-none border-none active:border-none bg-none"
         />
         <FiSearch />

@@ -24,8 +24,8 @@ export const fetchMovies = async () => {
 
     const data = await response.json();
 
-    if (data.Response === "True") {
-        updateMoviesList([...useMovieStore.data]);
+    if (data.Response === 'True') {
+        updateMoviesList([...movies, data[0]]);
         setApiStatus('success')
         
     } else {

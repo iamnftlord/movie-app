@@ -1,7 +1,7 @@
 import React from 'react'
 
 const MovieCard = (props) =>  {
-    const {Title, Year, Genre, Director, Actors, Poster, imdbRating} = props
+    const {Title, Year, Genre, Director, Actors, Poster, imdbRating} = props;
 
 
   return <div className='border p-4 rounded shadow-md max-w-sm flex flex-col items-center'>

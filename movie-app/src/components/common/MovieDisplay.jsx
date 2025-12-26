@@ -1,5 +1,5 @@
-import useMovieStore from "../../store/movies"
-import MovieCard from "./MovieCard"
+import useMovieStore from "../../store/movies";
+import MovieCard from "./MovieCard";
 
 
 const MovieDisplay = () => {
@@ -7,11 +7,14 @@ const MovieDisplay = () => {
 
     const isLoading = ApiStatus === 'pending';
 
-    console.log('Movies in store');
+    console.log('Movies in store:',
+      movies
+    );
+    
 
   return (  
      <div className="flex flex-wrap justify-center gap-4 p-4 my=[2em]">
-        {movies.length > 0 ?  movies.map((movie, idx) => {
+        {movies.length > 0 ? (movies.map((movie, idx) => {
             <MovieCard 
             Title={movie.Title} 
             Year={movie.Year} 
@@ -22,7 +25,7 @@ const MovieDisplay = () => {
             imdbRating={movie.imdbRating}
             key = {idx}
             />;
-        }) 
+        }) )
 
      : isLoading ? ( <p>fetching your movie details</p> 
 
