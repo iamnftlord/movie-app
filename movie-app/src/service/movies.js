@@ -1,43 +1,40 @@
 import useMovieStore from "../store/movies";
-import {envVars} from '../config'
-import { set } from "lodash";
+import envVars from "../config";
 
-export const fetchMovies = async () => {
-    const { searchTerm, updateMoviesList, 
-        movies, setApiStatus, ApiStatus } = 
-        useMovieStore.getState();
-        
-        if (ApiStatus === 'pending') {
-            return;
-        }
+export const fetchMovies = async (searchTerm) => {
+  const { updateMoviesList, setApiStatus, apiStatus } =
+    useMovieStore.getState();
 
-    try {
-        setApiStatus('pending');
+  if (!searchTerm || searchTerm.length < 3) {
+    updateMoviesList([]);
+    return;
+  }
 
-        const response = await fetch(
-            `http://www.omdbapi.com/?apiKey=$
-            {envVars.OMDBApiKey}&s=$
-            {encodeURIComponent(
-            searchTerm
-            )}`
-        );
+  if (apiStatus === "pending") 
+    return;
+
+  try {
+    setApiStatus("pending");
+
+    const response = await fetch(
+      `https://www.omdbapi.com/?apikey=${envVars.OMDBApiKey}&s=${encodeURIComponent(searchTerm)}`
+    );
 
     const data = await response.json();
 
-    if (data.Response === 'True') {
-        updateMoviesList([...movies, data[0]]);
-        setApiStatus('success')
-        
-    } else {
-        setApiStatus('failure')
-        throw new Error('something went wrong while fetching the movie');
+    if (data.Response === "False") {
+      updateMoviesList([]);
+      setApiStatus("success");
+      return;
     }
 
-    return data;
+    updateMoviesList(data.Search);
+    setApiStatus("success");
 
-    } catch(e) {
-        setApiStatus('failure')
-        console.error('failed to fetch movies', e);
-    }
+    console.log("Fetched movies:", data.Search); // ✅ YOU WILL SEE THIS
 
+  } catch (error) {
+    console.error("failed to fetch movies", error);
+    setApiStatus("failure");
+  }
 };

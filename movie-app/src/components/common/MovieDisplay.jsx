@@ -1,43 +1,35 @@
 import useMovieStore from "../../store/movies";
 import MovieCard from "./MovieCard";
 
-
 const MovieDisplay = () => {
-    const { movies, ApiStatus } = useMovieStore();
+  const { movies, apiStatus } = useMovieStore();
 
-    const isLoading = ApiStatus === 'pending';
+  const isLoading = apiStatus === "pending";
 
-    console.log('Movies in store:',
-      movies
-    );
-    
-
-  return (  
-     <div className="flex flex-wrap justify-center gap-4 p-4 my=[2em]">
-        {movies.length > 0 ? (movies.map((movie, idx) => {
-            <MovieCard 
-            Title={movie.Title} 
-            Year={movie.Year} 
-            Genre={movie.Genre} 
-            Director={movie.Director} 
-            Actors={movie.Actors} 
-            Poster={movie.Poster} 
-            imdbRating={movie.imdbRating}
-            key = {idx}
-            />;
-        }) )
-
-     : isLoading ? ( <p>fetching your movie details</p> 
-
-    ) : (
-        <p>No movies found.</p>
-        )
-    }
-    </div>
+  console.log(
+    "Movies in display component:",
+    movies.map((m) => m.Title)
   );
 
+  return (
+    <div className="flex flex-wrap justify-center gap-4 p-4 my-[2em]">
+      {isLoading ? (
+        <p>Fetching your movie details...</p>
+      ) : movies.length > 0 ? (
+        movies.map((movie, idx) => (
+          <MovieCard
+            key={idx}
+            Title={movie.Title}
+            Year={movie.Year}
+            Poster={movie.Poster}
+            imdbID={movie.imdbID}
+          />
+        ))
+      ) : (
+        <p>No movies found.</p>
+      )}
+    </div>
+  );
 };
-  
 
-
-export default MovieDisplay
+export default MovieDisplay;

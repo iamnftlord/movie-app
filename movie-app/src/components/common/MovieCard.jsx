@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+
 
 const MovieCard = (props) =>  {
     const {Title, Year, Genre, Director, Actors, Poster, imdbRating} = props;
 
+    console.log('Current props', props);
+    console.log('Getting here')
 
   return <div className='border p-4 rounded shadow-md max-w-sm flex flex-col items-center'>
     <img src={Poster} alt={`Poster for ${Title}`} />
