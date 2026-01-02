@@ -1,17 +1,8 @@
-import useMovieStore from "../store/movies";
 import envVars from "../config";
+import useMovieStore from "../store/movies";
 
 export const fetchMovies = async (searchTerm) => {
-  const { updateMoviesList, setApiStatus, apiStatus } =
-    useMovieStore.getState();
-
-  if (!searchTerm || searchTerm.length < 3) {
-    updateMoviesList([]);
-    return;
-  }
-
-  if (apiStatus === "pending") 
-    return;
+  const { updateMoviesList, setApiStatus } = useMovieStore.getState();
 
   try {
     setApiStatus("pending");
@@ -23,18 +14,37 @@ export const fetchMovies = async (searchTerm) => {
     const data = await response.json();
 
     if (data.Response === "False") {
-      updateMoviesList([]);
-      setApiStatus("success");
-      return;
+      throw new Error(data.Error);
     }
 
-    updateMoviesList(data.Search);
+    updateMoviesList(data.Search); // ✅ IMPORTANT
     setApiStatus("success");
-
-    console.log("Fetched movies:", data.Search); // ✅ YOU WILL SEE THIS
-
   } catch (error) {
-    console.error("failed to fetch movies", error);
+    console.error("Failed to fetch movies", error);
+    setApiStatus("failure");
+  }
+};
+
+export const fetchMoviesDetails = async (imdbID) => {
+  const { setSelectedMovie, setApiStatus } = useMovieStore.getState();
+
+  try {
+    setApiStatus("pending");
+
+    const response = await fetch(
+      `https://www.omdbapi.com/?apikey=${envVars.OMDBApiKey}&i=${imdbID}&plot=full`
+    );
+
+    const data = await response.json();
+
+    if (data.Response === "False") {
+      throw new Error(data.Error);
+    }
+
+    setSelectedMovie(data);
+    setApiStatus("success");
+  } catch (error) {
+    console.error("Failed to fetch movie details", error);
     setApiStatus("failure");
   }
 };

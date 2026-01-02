@@ -5,9 +5,13 @@ const useMovieStore = create((set) => ({
   searchTerm: "",
   apiStatus: "idle",
 
+  selectedMovie: null, // ✅ IMPORTANT
+
   setSearchTerm: (term) => set({ searchTerm: term }),
 
   updateMoviesList: (movies) => set({ movies }),
+
+  setSelectedMovie: (movie) => set({ selectedMovie: movie }),
 
   setApiStatus: (status) => set({ apiStatus: status }),
 }));

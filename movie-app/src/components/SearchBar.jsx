@@ -7,7 +7,7 @@ import { fetchMovies } from "../service/movies";
 const SearchBar = () => {
   const setSearchTerm = useMovieStore((state) => state.setSearchTerm);
 
-  // ✅ Debounced function accepts VALUE
+  
   const debouncedFetch = useMemo(
     () =>
       _.debounce((value) => {
@@ -28,7 +28,7 @@ const SearchBar = () => {
         type="text"
         placeholder="Search for Movies or TV Series"
         onChange={handleChange}
-        className="outline-none bg-transparent w-full"
+        className="outline-none border-none active:border-none bg-none"
       />
       <FiSearch />
     </div>

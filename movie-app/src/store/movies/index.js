@@ -1,11 +1,14 @@
 import { create } from 'zustand'
+import MovieDetails from '../../pages/MovieDetails';
 
 const initState = {
     movies: [],
     selectedMovie:{},
     searchTerm: '',
     ApiStatus: null,
+    MovieDetailsApiStatus: null,
     error: null,
+
 }
 
 const useMovieStore = create((set) => ({
@@ -23,6 +26,9 @@ const useMovieStore = create((set) => ({
 
     setApiStatus: (status) => set({
         ApiStatus: status
+    }),
+    setMovieDetailApiStatus: (status) => set({
+        MovieDetailsApiStatus: status
     }),
     
     reset: () => set({
