@@ -12,6 +12,7 @@ import {
 import useMovieStore from "../store/useMovieStore";
 import MovieCard from "../components/MovieCard";
 import SearchBar from "../components/SearchBar";
+import logo from "../assets/logo.svg"
 
 const Home = () => {
   const { movies, loading, error } = useMovieStore();
@@ -22,8 +23,8 @@ const Home = () => {
       {/* ================= Sidebar ================= */}
       <aside className="w-64 bg-[#111] flex flex-col justify-between p-6">
         <div>
-          <div className="text-2xl font-bold text-teal-400 mb-10">
-           <img src="/assets/react.svg" alt="" /> 🎬 MovieDB
+          <div className="mb-5">
+           <img src={logo} alt="Movie-Logo" />
           </div>
 
           <nav className="space-y-4">

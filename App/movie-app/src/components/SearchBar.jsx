@@ -19,7 +19,7 @@ const SearchBar = () => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button className="bg-red-600 px-5 rounded text-white">
+      <button className="bg-teal-600 px-5 rounded text-white">
         Search
       </button>
     </form>
