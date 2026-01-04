@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.svg'
 
 const LoginPage = () => {
@@ -8,6 +8,7 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({ email: 'oliviabrooke3435@gmail.com', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   // 2. Handle Google Login Logic
   const googleLogin = useGoogleLogin({
@@ -21,7 +22,8 @@ const LoginPage = () => {
         const userInfo = await res.json();
         
         console.log("Authenticated User:", userInfo);
-        // REDIRECT LOGIC: window.location.href = '/dashboard';
+        // Redirect to home after successful Google auth
+        navigate('/home');
       } catch (err) {
         setError("Failed to fetch user profile from Google.");
       } finally {
@@ -41,7 +43,9 @@ const LoginPage = () => {
     setTimeout(() => {
       if (formData.email && formData.password.length > 5) {
         console.log("Logged in with:", formData);
-        // REDIRECT LOGIC: window.location.href = '/dashboard';
+        // Redirect to home after successful email/password auth
+        navigate('/home');
+        setIsLoading(false);
       } else {
         setError("Invalid email or password.");
         setIsLoading(false);

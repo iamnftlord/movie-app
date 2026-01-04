@@ -12,10 +12,12 @@ import {
 import useMovieStore from "../store/useMovieStore";
 import MovieCard from "../components/MovieCard";
 import SearchBar from "../components/SearchBar";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg"
 
 const Home = () => {
   const { movies, loading, error } = useMovieStore();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-white flex">
@@ -28,14 +30,14 @@ const Home = () => {
           </div>
 
           <nav className="space-y-4">
-            <SidebarItem icon={<FiHome />} label="Home" active />
-            <SidebarItem icon={<FiFilm />} label="Movies" />
-            <SidebarItem icon={<FiTv />} label="TV Series" />
-            <SidebarItem icon={<FiClock />} label="Upcoming" />
+            <SidebarItem to="/home" icon={<FiHome />} label="Home" />
+            <SidebarItem to="/movies" icon={<FiFilm />} label="Movies" />
+            <SidebarItem to="/series" icon={<FiTv />} label="TV Series" />
+            <SidebarItem to="/upcoming" icon={<FiClock />} label="Upcoming" />
           </nav>
         </div>
 
-        <button className="flex items-center gap-3 text-gray-400 hover:text-red-500">
+        <button onClick={() => navigate('/login')} className="flex items-center gap-3 text-gray-400 hover:text-red-500">
           <FiLogOut />
           Log out
         </button>
@@ -113,18 +115,18 @@ const Home = () => {
 
 export default Home;
 
-const SidebarItem = ({ icon, label, active }) => (
-  <div
-    className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer 
-    ${
-      active
-        ? "bg-teal-600 text-white"
-        : "text-gray-400 hover:bg-gray-800"
-    }`}
+const SidebarItem = ({ to, icon, label }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `flex items-center gap-3 px-4 py-3 rounded-lg ${
+        isActive ? "bg-teal-600 text-white" : "text-gray-400 hover:bg-gray-800"
+      }`
+    }
   >
     {icon}
     <span>{label}</span>
-  </div>
+  </NavLink>
 );
 
 

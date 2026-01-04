@@ -1,0 +1,133 @@
+# MovieHive (React + Vite)
+
+MovieHive is a modern React application for discovering movies using the OMDb API. It features Google OAuth login, a clean Tailwind UI, fast client-side routing, and a simple global store for fetching/searching movies.
+
+## Features
+
+- Authentication: Google OAuth via `@react-oauth/google` and a mock email/password flow
+- Search & Details: Query OMDb, view results and navigate to a movie details page
+- Routing & Navigation: Sidebar with active state using `react-router-dom`
+- State Management: Lightweight global store powered by `zustand`
+- Styling: Tailwind CSS + responsive layout
+- Tooling: Vite for fast dev builds and previews
+
+## Tech Stack
+
+- React 19, Vite 5
+- React Router DOM 7
+- Zustand 5
+- Axios for API calls
+- Tailwind CSS 3
+- React Icons
+
+## Project Structure
+
+```
+App/
+	movie-app/
+		src/
+			App.jsx
+			main.jsx
+			index.css
+			Oauth/
+				LoginPage.jsx
+				SignupPage.jsx
+			pages/
+				Home.jsx
+				MovieDetails.jsx
+				Movies.jsx
+				TvSeries.jsx
+				Upcoming.jsx
+			components/
+				SearchBar.jsx
+				MovieCard.jsx
+			store/
+				useMovieStore.js
+			service/
+				api.js
+		vite.config.js
+		package.json
+		.env (not committed)
+```
+
+- App entry: see [src/main.jsx](src/main.jsx)
+- Routing: see [src/App.jsx](src/App.jsx)
+- Auth screens: [src/Oauth/LoginPage.jsx](src/Oauth/LoginPage.jsx), [src/Oauth/SignupPage.jsx](src/Oauth/SignupPage.jsx)
+- State & API: [src/store/useMovieStore.js](src/store/useMovieStore.js) and [src/service/api.js](src/service/api.js)
+
+## Prerequisites
+
+- Node.js 18+ and npm
+- OMDb API key: https://www.omdbapi.com/apikey.aspx
+- Google OAuth Client ID (OAuth 2.0, Web application)
+
+## Setup
+
+1) Clone or open the project and move into the app folder:
+
+```powershell
+cd "App/movie-app"
+```
+
+2) Create an `.env` file with your OMDb key:
+
+```dotenv
+VITE_OMDB_API_KEY=your_omdb_key
+```
+
+3) Configure Google OAuth:
+
+- Open [src/main.jsx](src/main.jsx) and set your Client ID in `GoogleOAuthProvider`.
+- Optional: you can move this to an env var (e.g., `VITE_GOOGLE_CLIENT_ID`) and read with `import.meta.env.VITE_GOOGLE_CLIENT_ID`.
+
+4) Install dependencies and start the dev server:
+
+```powershell
+npm install
+npm run dev
+```
+
+Visit http://localhost:5173/ and log in. After successful auth you’ll be redirected to `/home`.
+
+## Scripts
+
+- `dev`: Start Vite dev server
+- `build`: Build for production
+- `preview`: Preview the production build locally
+- `lint`: Run ESLint
+
+## Routing
+
+- `/login` – Login page (Google OAuth + email/password)
+- `/signup` – Signup page
+- `/home` – Main dashboard with search and trending grid
+- `/movies` – Movies placeholder page
+- `/series` – TV series placeholder page
+- `/upcoming` – Upcoming content placeholder page
+- `/movie/:id` – Movie details page
+
+## Environment Variables
+
+- `VITE_OMDB_API_KEY` – OMDb API key used in [src/service/api.js](src/service/api.js)
+- (Optional) `VITE_GOOGLE_CLIENT_ID` – If you externalize the Google Client ID
+
+> Never commit your `.env` file. Store secrets securely.
+
+## Implementation Notes
+
+- `useMovieStore` exposes `searchMovies(query)` and `getMovieDetails(id)` and keeps `movies`, `selectedMovie`, `loading`, `error`.
+- `SearchBar` calls `searchMovies(query)` on submit.
+- `MovieCard` links to the details route using the `imdbID`.
+- Sidebar uses `NavLink` for active styles and navigation.
+- Logout simply navigates back to `/login`.
+
+## Troubleshooting
+
+- Blank/404 at `localhost:5173/`: ensure `npm run dev` is running and the terminal hasn’t been closed.
+- "vite is not recognized": run `npm install` in the `App/movie-app` folder to install local binaries.
+- Google login keeps authenticating: verify your OAuth Client ID, allowed origin (`http://localhost:5173`), and that the dev server remains running.
+- No search results: check your OMDb key and network access; the API quota may apply.
+
+## License
+
+This project is for learning/demo purposes. Add a license if you plan to distribute.
